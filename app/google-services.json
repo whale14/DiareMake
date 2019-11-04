@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "258034075995",
+    "firebase_url": "https://diaremake.firebaseio.com",
+    "project_id": "diaremake",
+    "storage_bucket": "diaremake.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258034075995:android:57023df5047e0f35bd327e",
+        "android_client_info": {
+          "package_name": "com.example.diaremake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258034075995-bc34303gpmdst316u77v679fnv7da93g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.diaremake",
+            "certificate_hash": "82e06dc6004049aa0564dd8e257e18a029a74e41"
+          }
+        },
+        {
+          "client_id": "258034075995-armkeo4jjk4u7c1egmp28tj8vf9a0khr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6uAqiU3OAVoM_J58u_Fofb8Zgdzm2LDU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258034075995-armkeo4jjk4u7c1egmp28tj8vf9a0khr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
