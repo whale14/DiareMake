@@ -37,4 +37,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //페이스북이용
     implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
+    implementation 'com.google.android.material:material:1.0.0'
 }

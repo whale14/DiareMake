@@ -3,17 +3,27 @@ package com.example.diaremake;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.diaremake.databinding.ActivityMainBinding;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private FragMain fragMain;
+    private FragCal fragCal;
+    private FragUserInfo fragUserInfo;
+    private FragmentManager fm;
+    private FragmentTransaction ft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,29 +31,51 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        binding.writeBtn.setOnClickListener(v);
-        binding.logoutBtn.setOnClickListener(v);
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_home :
+                        setFrag(0);
+                        break;
+                    case R.id.action_cal :
+                        setFrag(1);
+                        break;
+                    case R.id.action_user :
+                        setFrag(2);
+                        break;
+                }
+                return true;
+            }
+        });
+
+        fragMain = new FragMain();
+        fragCal = new FragCal();
+        fragUserInfo = new FragUserInfo();
+
+        setFrag(0);
+
     }
 
-    View.OnClickListener v = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.write_btn:
-                    startActivity(new Intent(getApplicationContext(), WriteActivity.class));
-                    break;
-                case R.id.logout_btn:
-                    AuthUI.getInstance()
-                            .signOut(getApplicationContext())
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    // ...
-                                }
-                            });
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                    finish();
-                    break;
-            }
+    //프래그먼트 교체 실행문
+    private void setFrag(int n) {
+        fm = getSupportFragmentManager();
+        ft = fm.beginTransaction();
+        switch (n) {
+            case 0 :
+                ft.replace(R.id.main_frame, fragMain);
+                ft.commit();
+                break;
+            case 1 :
+                ft.replace(R.id.main_frame, fragCal);
+                ft.commit();
+                break;
+            case 2 :
+                ft.replace(R.id.main_frame, fragUserInfo);
+                ft.commit();
+                break;
         }
-    };
+    }
+
+
 }
