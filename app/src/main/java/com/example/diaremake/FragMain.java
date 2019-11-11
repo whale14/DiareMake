@@ -2,7 +2,6 @@ package com.example.diaremake;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 
 import com.example.diaremake.databinding.FragMainBinding;
@@ -38,7 +36,7 @@ public class FragMain extends Fragment {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.go_write_btn:
-                    startActivity(new Intent(getContext(), WriteActivity.class));
+                    startActivity(new Intent(getContext(), MakeDiaryActivity.class));
                     break;
                 case R.id.logout_btn:
                     AuthUI.getInstance()
