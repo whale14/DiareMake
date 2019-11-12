@@ -40,6 +40,7 @@ public class MakeDiaryActivity extends AppCompatActivity {
     private Uri filePath;
     private String url;
     private String title;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -68,8 +69,8 @@ public class MakeDiaryActivity extends AppCompatActivity {
                 case R.id.make_diary_btn :
                     title = binding.editText.getText().toString();
                     uploadTitleImage();
-                    uploadDB();
-//                    goDiaryMain();
+//                    uploadDB();
+
                     break;
             }
         }
@@ -83,6 +84,10 @@ public class MakeDiaryActivity extends AppCompatActivity {
                 url);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         db.collection(user.getUid()).document(binding.editText.getText().toString()).set(titleModelData);
+        Intent i = new Intent(getApplicationContext(),DiaryMainActivity.class);
+        i.putExtra("title", title);
+        startActivity(i);
+        finish();
     }
 
     @Override
@@ -112,7 +117,7 @@ public class MakeDiaryActivity extends AppCompatActivity {
         //업로드할 파일이 있으면 수행
         if (filePath != null) {
             //업로드 진행 Dialog 보이기
-            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("업로드중...");
             progressDialog.show();
 
@@ -127,13 +132,21 @@ public class MakeDiaryActivity extends AppCompatActivity {
             StorageReference storageRef = storage.getReference().child("Title/" + filename);
             url = storageRef.toString();
             //올라가거라...
+            TitleModelData titleModelData = new TitleModelData(
+                    title,
+                    url);
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            db.collection(user.getUid()).document(title).set(titleModelData);
             storageRef.putFile(filePath)
                     //성공시
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
-                            Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(getApplicationContext(),DiaryMainActivity.class);
+                            i.putExtra("title", title);
+                            startActivity(i);
+                            finish();
                         }
                     })
                     //실패시
@@ -157,12 +170,5 @@ public class MakeDiaryActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void goDiaryMain() {
-        Intent i = new Intent(getApplicationContext(),DiaryMainActivity.class);
-        i.putExtra("title", title);
-        startActivity(i);
-        finish();
     }
 }
