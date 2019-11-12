@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         tools:context=".DiaryMainActivity">
 
-        <ImageView
+        <com.example.diaremake.SquareImage
             android:id="@+id/title_img"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:src="@drawable/intro_text"/>
 
         <TextView
             android:id="@+id/title_text"

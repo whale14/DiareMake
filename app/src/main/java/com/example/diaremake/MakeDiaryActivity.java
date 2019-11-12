@@ -129,7 +129,7 @@ public class MakeDiaryActivity extends AppCompatActivity {
             Date now = new Date();
             String filename = formatter.format(now) + ".png";
             //storage 주소와 폴더 파일명을 지정해 준다.
-            StorageReference storageRef = storage.getReference().child("Title/" + filename);
+            StorageReference storageRef = storage.getReference().child("title/" + filename);
             url = storageRef.toString();
             //올라가거라...
             TitleModelData titleModelData = new TitleModelData(
