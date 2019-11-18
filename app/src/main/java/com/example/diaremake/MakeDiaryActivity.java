@@ -136,7 +136,7 @@ public class MakeDiaryActivity extends AppCompatActivity {
                     title,
                     url);
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            db.collection(user.getUid()).document(title).set(titleModelData);
+            db.collection(user.getUid()).document(filename.substring(0,13)).set(titleModelData);
             storageRef.putFile(filePath)
                     //성공시
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

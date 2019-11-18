@@ -41,16 +41,19 @@ public class DiaryMainActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
 
-        Intent i = getIntent();
-        DocumentReference documentReference = db.collection(user.getUid()).document(i.getStringExtra("title"));
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        final Intent i = getIntent();
+        db.collection(user.getUid()).document(i.getStringExtra("title")).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 Log.d("123", "onComplete: " + task.getResult().get("img").toString());
                 String uri = task.getResult().get("img").toString();
                 Toast.makeText(DiaryMainActivity.this, uri, Toast.LENGTH_SHORT).show();
                 StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
-                Glide.with(getApplicationContext()).load(storageRef).centerCrop().into(binding.titleImg);
+                Glide.with(getApplicationContext())
+                        .load(storageRef)
+                        .centerCrop()
+                        .into(binding.titleImg);
                 binding.titleText.setText(task.getResult().get("title").toString());
             }
         });

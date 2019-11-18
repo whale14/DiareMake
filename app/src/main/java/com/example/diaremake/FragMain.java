@@ -2,6 +2,7 @@ package com.example.diaremake;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.diaremake.databinding.FragMainBinding;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +36,8 @@ public class FragMain extends Fragment {
     private View view;
     private FragMainBinding binding;
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     FirebaseFirestore db;
 
     @Nullable
@@ -45,10 +50,26 @@ public class FragMain extends Fragment {
         binding.logoutBtn.setOnClickListener(v);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        db = FirebaseFirestore.getInstance();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.recyclerView.setLayoutManager(layoutManager);
+        List<Diaries> item = new ArrayList<>();
+        final DiaryAdapter adapter = new DiaryAdapter();
+        binding.recyclerView.setAdapter(adapter);
 
+        assert user != null;
+        db.collection(user.getUid()).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List it = new ArrayList();
+                it.add(task.getResult().getDocuments().toArray());
+                adapter.setItems(it);
+                adapter.notifyDataSetChanged();
+                Log.d(TAG, "onComplete: " +it.toString());
+            }
+        });
         return binding.getRoot();
     }
     View.OnClickListener v = new View.OnClickListener() {
@@ -114,7 +135,8 @@ public class FragMain extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull DiaryViewHolder holder, int position) {
             Diaries item = mItems.get(position);
-            // TODO : 데이터를 뷰홀더에 표시하시오
+            Glide.with(holder.titleImage).load(mItems.get(position).getImg()).into(holder.titleImage);
+            holder.titleText.setText("짠");
 
         }
 
