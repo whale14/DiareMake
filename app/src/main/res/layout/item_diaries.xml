@@ -3,9 +3,9 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
-
     <com.example.diaremake.SquareImage
         android:id="@+id/diaries_img"
+        android:src="@drawable/intro_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView

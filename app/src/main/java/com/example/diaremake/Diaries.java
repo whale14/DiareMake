@@ -1,12 +1,15 @@
 package com.example.diaremake;
 
 public class Diaries {
-    private String title;
     private String img;
+    private String title;
 
-    public Diaries(String title, String img) {
-        this.title = title;
+    public Diaries() {
+    }
+
+    public Diaries(String img, String title) {
         this.img = img;
+        this.title = title;
     }
 
     public String getTitle() {

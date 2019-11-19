@@ -58,5 +58,4 @@ public class DiaryMainActivity extends AppCompatActivity {
             }
         });
     }
-//    Glide.with(getApplicationContext()).load(task.getResult().get("img").toString()).into(binding.titleImg);
 }

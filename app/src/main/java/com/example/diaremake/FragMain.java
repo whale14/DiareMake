@@ -26,10 +26,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class FragMain extends Fragment {
@@ -54,7 +57,6 @@ public class FragMain extends Fragment {
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.recyclerView.setLayoutManager(layoutManager);
-        List<Diaries> item = new ArrayList<>();
         final DiaryAdapter adapter = new DiaryAdapter();
         binding.recyclerView.setAdapter(adapter);
 
@@ -63,8 +65,7 @@ public class FragMain extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List it = new ArrayList();
-                it.add(task.getResult().getDocuments().toArray());
+                final List<TitleModelData> it = task.getResult().toObjects(TitleModelData.class);
                 adapter.setItems(it);
                 adapter.notifyDataSetChanged();
                 Log.d(TAG, "onComplete: " +it.toString());
@@ -95,12 +96,12 @@ public class FragMain extends Fragment {
     };
     private static class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHolder> {
         interface OnDiaryClickListener {
-            void onDiaryClicked(Diaries model);
+            void onDiaryClicked(TitleModelData model);
         }
 
         private OnDiaryClickListener mListener;
 
-        private List<Diaries> mItems = new ArrayList<>();
+        private List<TitleModelData> mItems = new ArrayList<>();
 
         public DiaryAdapter() {}
 
@@ -108,7 +109,7 @@ public class FragMain extends Fragment {
             mListener = listener;
         }
 
-        public void setItems(List<Diaries> items) {
+        public void setItems(List<TitleModelData> items) {
             this.mItems = items;
             notifyDataSetChanged();
         }
@@ -123,7 +124,7 @@ public class FragMain extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
-                        final Diaries item = mItems.get(viewHolder.getAdapterPosition());
+                        final TitleModelData item = mItems.get(viewHolder.getAdapterPosition());
                         mListener.onDiaryClicked(item);
                     }
                 }
@@ -134,9 +135,14 @@ public class FragMain extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull DiaryViewHolder holder, int position) {
-            Diaries item = mItems.get(position);
-            Glide.with(holder.titleImage).load(mItems.get(position).getImg()).into(holder.titleImage);
-            holder.titleText.setText("짠");
+            TitleModelData item = mItems.get(position);
+            StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(item.getImg().toString());
+            Glide.with(holder.itemView)
+                    .load(storageRef)
+                    .centerCrop()
+                    .into(holder.titleImage);
+
+            holder.titleText.setText(item.getTitle());
 
         }
 

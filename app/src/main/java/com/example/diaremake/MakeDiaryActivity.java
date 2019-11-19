@@ -127,7 +127,7 @@ public class MakeDiaryActivity extends AppCompatActivity {
             //Unique한 파일명을 만들자.
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
             Date now = new Date();
-            String filename = formatter.format(now) + ".png";
+            final String filename = formatter.format(now) + ".png";
             //storage 주소와 폴더 파일명을 지정해 준다.
             StorageReference storageRef = storage.getReference().child("title/" + filename);
             url = storageRef.toString();
@@ -144,7 +144,7 @@ public class MakeDiaryActivity extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
                             Intent i = new Intent(getApplicationContext(),DiaryMainActivity.class);
-                            i.putExtra("title", title);
+                            i.putExtra("title", filename.substring(0,13));
                             startActivity(i);
                             finish();
                         }
