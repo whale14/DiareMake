@@ -139,7 +139,7 @@ public class MakeDiaryActivity extends AppCompatActivity {
             db.collection(user.getUid()).document(filename.substring(0,13)).set(titleModelData);
             storageRef.putFile(filePath)
                     //성공시
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                      .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기

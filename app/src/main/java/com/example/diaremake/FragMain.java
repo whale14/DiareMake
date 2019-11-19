@@ -50,7 +50,6 @@ public class FragMain extends Fragment {
         view = inflater.inflate(R.layout.frag_main, container, false);
         binding = DataBindingUtil.inflate(inflater, R.layout.frag_main, container, false);
 
-        binding.goWriteBtn.setOnClickListener(v);
         binding.logoutBtn.setOnClickListener(v);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -72,26 +71,31 @@ public class FragMain extends Fragment {
                 Log.d(TAG, "onComplete: " +it.toString());
             }
         });
+
+        adapter.setOnDiaryClickListener(new DiaryAdapter.OnDiaryClickListener() {
+            @Override
+            public void onDiaryClicked(TitleModelData model) {
+                Log.d(TAG, "onClick: " + model.getTitle());
+                Intent i = new Intent(getContext(), DiaryMainActivity.class);
+                i.putExtra("img", model.getImg());
+                startActivity(i);
+            }
+        });
         return binding.getRoot();
     }
     View.OnClickListener v = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.go_write_btn:
-                    startActivity(new Intent(getContext(), MakeDiaryActivity.class));
-                    break;
-                case R.id.logout_btn:
-                    AuthUI.getInstance()
-                            .signOut(getContext())
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    // ...
-                                }
-                            });
-                    startActivity(new Intent(getContext(), LoginActivity.class));
-                    getActivity().finish();
-                    break;
+            if (v.getId() == R.id.logout_btn) {
+                AuthUI.getInstance()
+                        .signOut(getContext())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                // ...
+                            }
+                        });
+                startActivity(new Intent(getContext(), LoginActivity.class));
+                getActivity().finish();
             }
         }
     };
@@ -106,7 +110,7 @@ public class FragMain extends Fragment {
 
         public DiaryAdapter() {}
 
-        public DiaryAdapter(OnDiaryClickListener listener) {
+        public void setOnDiaryClickListener(OnDiaryClickListener listener) {
             mListener = listener;
         }
 
@@ -126,7 +130,7 @@ public class FragMain extends Fragment {
                 public void onClick(View v) {
                     if (mListener != null) {
                         final TitleModelData item = mItems.get(viewHolder.getAdapterPosition());
-                        mListener.onDiaryClicked(item);
+                        mListener.onDiaryClicked(item);;
                     }
                 }
             });

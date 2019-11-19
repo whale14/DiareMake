@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toolbar;
@@ -29,23 +30,42 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction ft;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_tool_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_create_diary:
+                startActivity(new Intent(getApplicationContext(), MakeDiaryActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         setSupportActionBar(binding.mainToolbar);
+
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    case R.id.action_home :
+                    case R.id.action_home:
                         setFrag(0);
                         break;
-                    case R.id.action_cal :
+                    case R.id.action_cal:
                         setFrag(1);
                         break;
-                    case R.id.action_user :
+                    case R.id.action_user:
                         setFrag(2);
                         break;
                 }
@@ -66,15 +86,15 @@ public class MainActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         switch (n) {
-            case 0 :
+            case 0:
                 ft.replace(R.id.main_frame, fragMain);
                 ft.commit();
                 break;
-            case 1 :
+            case 1:
                 ft.replace(R.id.main_frame, fragCal);
                 ft.commit();
                 break;
-            case 2 :
+            case 2:
                 ft.replace(R.id.main_frame, fragUserInfo);
                 ft.commit();
                 break;
