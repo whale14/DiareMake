@@ -1,6 +1,7 @@
 package com.example.diaremake;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,7 +66,7 @@ public class FragMain extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                final List<TitleModelData> it = task.getResult().toObjects(TitleModelData.class);
+                List<TitleModelData> it = task.getResult().toObjects(TitleModelData.class);
                 adapter.setItems(it);
                 adapter.notifyDataSetChanged();
                 Log.d(TAG, "onComplete: " +it.toString());
@@ -143,6 +144,7 @@ public class FragMain extends Fragment {
                     .into(holder.titleImage);
 
             holder.titleText.setText(item.getTitle());
+            holder.titleText.setTextColor(Color.WHITE);
 
         }
 

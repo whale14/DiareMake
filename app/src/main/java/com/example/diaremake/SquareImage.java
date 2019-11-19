@@ -23,12 +23,7 @@ public class SquareImage extends AppCompatImageView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-
-        width = Math.min(width, height);
-        height = width;
-
-        setMeasuredDimension(width, height);
+        int width = getMeasuredWidth();
+        setMeasuredDimension(width, width);
     }
 }
