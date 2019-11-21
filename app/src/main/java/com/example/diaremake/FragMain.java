@@ -25,7 +25,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -34,6 +38,8 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class FragMain extends Fragment {
@@ -61,11 +67,22 @@ public class FragMain extends Fragment {
         binding.recyclerView.setAdapter(adapter);
 
         assert user != null;
-        db.collection(user.getUid()).get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Query query = db.collection(user.getUid());
+        ListenerRegistration listenerRegistration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<TitleModelData> it = task.getResult().toObjects(TitleModelData.class);
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                List<TitleModelData> it = queryDocumentSnapshots.toObjects(TitleModelData.class);
+                Collections.sort(it, new Comparator<TitleModelData>() {
+                    @Override
+                    public int compare(TitleModelData o1, TitleModelData o2) {
+                        Long day1 = Long.parseLong(o1.getImg().substring(33,41) + o1.getImg().substring(42,46));
+                        Long day2 = Long.parseLong(o2.getImg().substring(33,41) + o2.getImg().substring(42,46));
+
+                        if (day1.equals(day2)) return 0;
+                        else  if (day1 >day2) return -1;
+                        else return -1;
+                    }
+                });
                 adapter.setItems(it);
                 adapter.notifyDataSetChanged();
                 Log.d(TAG, "onComplete: " +it.toString());
@@ -75,9 +92,9 @@ public class FragMain extends Fragment {
         adapter.setOnDiaryClickListener(new DiaryAdapter.OnDiaryClickListener() {
             @Override
             public void onDiaryClicked(TitleModelData model) {
-                Log.d(TAG, "onClick: " + model.getTitle());
+                Log.d(TAG, "onClick: " + model.getImg().substring(33,46));
                 Intent i = new Intent(getContext(), DiaryMainActivity.class);
-                i.putExtra("img", model.getImg());
+                i.putExtra("title", model.getImg().substring(33,46));
                 startActivity(i);
             }
         });
@@ -99,6 +116,8 @@ public class FragMain extends Fragment {
             }
         }
     };
+
+    //다이어리 리사이클러 어댑터
     private static class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHolder> {
         interface OnDiaryClickListener {
             void onDiaryClicked(TitleModelData model);
