@@ -2,16 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".WriteActivity">
 
         <androidx.appcompat.widget.Toolbar
-            android:background="@drawable/border_bottom"
             android:id="@+id/write_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/border_bottom"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -25,7 +26,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <com.example.diaremake.SquareImage
-            android:id="@+id/write_img"
+            android:id="@+id/write_img_choice"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -34,31 +35,95 @@
             app:layout_constraintTop_toBottomOf="@+id/write_toolbar"
             app:srcCompat="@drawable/ic_add_black_24dp" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="날짜(2019.xx.xx)"
-            app:layout_constraintBottom_toBottomOf="@+id/write_img"
-            app:layout_constraintStart_toEndOf="@+id/write_img" />
-
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="0dp"
+        <com.example.diaremake.SquareImage
+            android:scaleType="centerCrop"
+            android:id="@+id/write_back_img"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:hint="본문"
-            android:inputType="textPersonName"
-            android:paddingStart="16dp"
-            android:paddingTop="66dp"
-            android:textAlignment="viewStart"
+            android:src="@drawable/intro_text"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/write_toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/write_img_choice" />
+
+        <EditText
+
+            android:id="@+id/write_text_et"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="#33000000"
+            android:gravity="start|top"
+            android:hint="입력"
+            android:inputType="textMultiLine"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/write_back_img"
+            app:layout_constraintEnd_toEndOf="@+id/write_back_img"
+            app:layout_constraintStart_toStartOf="@+id/write_back_img"
+            app:layout_constraintTop_toTopOf="@+id/write_back_img" />
+
+        <EditText
+            android:id="@+id/weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:hint="날씨"
+            app:layout_constraintBottom_toTopOf="@+id/write_back_img"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <EditText
+            android:id="@+id/date_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:hint="날짜(2019.xx.xx)"
+            app:layout_constraintBottom_toTopOf="@+id/write_back_img"
+            app:layout_constraintEnd_toStartOf="@+id/weather" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="이미지 선택"
+            app:layout_constraintBottom_toTopOf="@+id/write_back_img"
+            app:layout_constraintStart_toEndOf="@+id/write_img_choice" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="정렬"
+            app:layout_constraintEnd_toStartOf="@+id/align_spn"
+            app:layout_constraintTop_toBottomOf="@+id/write_back_img" />
+
+        <Spinner
+            android:id="@+id/align_spn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:entries="@array/alignment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_back_img" />
+
+        <Button
+            android:id="@+id/save_daily_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="저장"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

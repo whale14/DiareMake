@@ -2,4 +2,9 @@
     <string name="app_name">DiareMake</string>
     <string name="facebook_application_id" translatable="false">2591126030945618</string>
     <string name="facebook_login_protocol_scheme" translatable="false">4b373a4b6bad1d8f17433bdc26a11054</string>
+    <array name="alignment">
+        <item>"왼쪽"</item>
+        <item>"가운데"</item>
+        <item>"오른쪽"</item>
+    </array>
 </resources>

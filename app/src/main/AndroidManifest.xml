@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".WriteActivity"></activity>
+        <activity android:name=".ReadDailyActivity"></activity>
+        <activity android:name=".WriteActivity" />
         <activity android:name=".DiaryMainActivity" />
         <activity android:name=".MakeDiaryActivity" />
         <activity android:name=".LoginActivity" />
