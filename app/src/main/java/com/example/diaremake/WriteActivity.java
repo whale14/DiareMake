@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Layout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -117,6 +118,34 @@ public class WriteActivity extends AppCompatActivity {
 
             }
         });
+        binding.gravitySpn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text;
+                switch (position) {
+                    case 0 :
+                        binding.writeTextEt.setGravity(Gravity.CLIP_VERTICAL);
+                        text = binding.writeTextEt.getText().toString();
+                        binding.writeTextEt.setText(text);
+                        break;
+                    case 1 :
+                        binding.writeTextEt.setGravity(Gravity.CENTER_VERTICAL);
+                        text = binding.writeTextEt.getText().toString();
+                        binding.writeTextEt.setText(text);
+                        break;
+                    case 2 :
+                        binding.writeTextEt.setGravity(Gravity.BOTTOM);
+                        text = binding.writeTextEt.getText().toString();
+                        binding.writeTextEt.setText(text);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         binding.saveDailyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,7 +183,8 @@ public class WriteActivity extends AppCompatActivity {
                     binding.dateEt.getText().toString(),
                     binding.weather.getText().toString(),
                     url, binding.writeTextEt.getText().toString(),
-                    binding.writeTextEt.getTextAlignment());
+                    binding.writeTextEt.getTextAlignment(),
+                    binding.writeTextEt.getGravity());
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             db.collection(user.getUid()).document(i.getStringExtra("title")).collection("daily").document(String.valueOf(dailyModelData.getCreateDate())).set(dailyModelData);

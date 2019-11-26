@@ -102,7 +102,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="정렬"
-            app:layout_constraintEnd_toStartOf="@+id/align_spn"
+            app:layout_constraintEnd_toStartOf="@+id/gravity_spn"
             app:layout_constraintTop_toBottomOf="@+id/write_back_img" />
 
         <Spinner
@@ -124,6 +124,16 @@
             android:text="저장"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <Spinner
+            android:id="@+id/gravity_spn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:entries="@array/gravity"
+            app:layout_constraintEnd_toStartOf="@+id/align_spn"
+            app:layout_constraintTop_toBottomOf="@+id/write_back_img" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

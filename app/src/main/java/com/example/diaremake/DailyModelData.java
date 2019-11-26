@@ -1,22 +1,26 @@
 package com.example.diaremake;
 
 public class DailyModelData {
-    long createDate;
-    String date;
-    String weather;
-    String imgUrl;
-    String text;
-    int alignment;
+    private long createDate;
+    private String date;
+    private String weather;
+    private String imgUrl;
+    private String text;
+    private int alignment;
+    private int gravity;
     public DailyModelData() {
     }
 
-    public DailyModelData(long createDate, String date, String weather, String imgUrl, String text, int alignment) {
+
+
+    public DailyModelData(long createDate, String date, String weather, String imgUrl, String text, int alignment, int gravity) {
         this.createDate = createDate;
         this.date = date;
         this.weather = weather;
         this.imgUrl = imgUrl;
         this.text = text;
         this.alignment = alignment;
+        this.gravity = gravity;
     }
 
     public long getCreateDate() {
@@ -65,5 +69,13 @@ public class DailyModelData {
 
     public void setAlignment(int alignment) {
         this.alignment = alignment;
+    }
+
+    public int getGravity() {
+        return gravity;
+    }
+
+    public void setGravity(int gravity) {
+        this.gravity = gravity;
     }
 }

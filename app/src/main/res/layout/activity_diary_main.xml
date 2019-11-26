@@ -43,7 +43,7 @@
 
                 <com.example.diaremake.SquareImage
                     android:id="@+id/title_img"
-                    android:layout_width="100dp"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:src="@drawable/intro_text" />

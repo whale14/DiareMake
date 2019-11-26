@@ -7,4 +7,9 @@
         <item>"가운데"</item>
         <item>"오른쪽"</item>
     </array>
+    <array name="gravity">
+        <item>"위"</item>
+        <item>"가운데"</item>
+        <item>"아래"</item>
+    </array>
 </resources>
