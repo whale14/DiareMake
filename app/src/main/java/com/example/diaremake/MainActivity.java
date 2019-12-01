@@ -24,7 +24,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private FragMain fragMain;
-    private FragCal fragCal;
     private FragUserInfo fragUserInfo;
     private FragmentManager fm;
     private FragmentTransaction ft;
@@ -61,11 +60,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_home:
                         setFrag(0);
                         break;
-                    case R.id.action_cal:
-                        setFrag(1);
-                        break;
                     case R.id.action_user:
-                        setFrag(2);
+                        setFrag(1);
                         break;
                 }
                 return true;
@@ -73,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         fragMain = new FragMain();
-        fragCal = new FragCal();
         fragUserInfo = new FragUserInfo();
 
         setFrag(0);
@@ -90,10 +85,6 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
                 break;
             case 1:
-                ft.replace(R.id.main_frame, fragCal);
-                ft.commit();
-                break;
-            case 2:
                 ft.replace(R.id.main_frame, fragUserInfo);
                 ft.commit();
                 break;
